@@ -68,13 +68,13 @@ This project demonstrates the development of an interactive and responsive weath
 <img width="1907" height="817" alt="Image" src="https://github.com/user-attachments/assets/41bf8b87-caa7-425e-9d91-910dad609702" />
 
 ### ⏰ Hourly Forecast
-<img width="1877" height="872" alt="Image" src="https://github.com/user-attachments/assets/4d916c8b-4937-4e1a-903e-1ee26e670f13" />
+<img width="1895" height="908" alt="Image" src="https://github.com/user-attachments/assets/39691204-c3e7-4b86-812f-e1114406dacc" />
 
 ### 📅 7-Day Forecast
-<img width="1876" height="430" alt="Image" src="https://github.com/user-attachments/assets/5b6d3fa6-0bbb-42d8-948d-9b49331c925a" />
+<img width="1875" height="371" alt="Image" src="https://github.com/user-attachments/assets/dd41b1ed-eb1b-4d06-bd58-d91be4db0324" />
 
 ### 🕘 Recent Searches
-<img width="1782" height="257" alt="Image" src="https://github.com/user-attachments/assets/cac7a1ae-9f04-41ba-92b2-de8bedafd9cc" />
+<img width="1883" height="195" alt="Image" src="https://github.com/user-attachments/assets/f32f48c5-d308-4074-80a6-231f2ddeed24" />
 
 ### 🌙 Dark Mode
 <img width="1888" height="862" alt="Image" src="https://github.com/user-attachments/assets/bb91e787-d3eb-49c0-8b01-5ee8deb32b22" />
