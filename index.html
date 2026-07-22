@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="SkyCast - Modern Weather Forecast Application"
+    >
+
+    <title>SkyCast | Weather Forecast</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Background Decorations -->
+    <div class="background-shape shape-one"></div>
+    <div class="background-shape shape-two"></div>
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="header">
+
+        <nav class="navbar">
+
+            <!-- Logo -->
+            <a href="#" class="logo">
+
+                <div class="logo-icon">
+                    <i class="fa-solid fa-cloud-sun"></i>
+                </div>
+
+                <div class="logo-text">
+                    <span>SkyCast</span>
+                    <small>Weather Forecast</small>
+                </div>
+
+            </a>
+
+
+            <!-- Search -->
+            <form class="search-form" id="searchForm">
+
+                <div class="search-box">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input
+                        type="text"
+                        id="cityInput"
+                        placeholder="Search city..."
+                        autocomplete="off"
+                        aria-label="Search city"
+                    >
+
+                    <button
+                        type="button"
+                        id="clearSearchBtn"
+                        class="clear-search-btn"
+                        aria-label="Clear search"
+                    >
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="search-btn"
+                >
+                    Search
+                </button>
+
+            </form>
+
+
+            <!-- Header Actions -->
+            <div class="nav-actions">
+
+                <button
+                    class="nav-btn location-btn"
+                    id="locationBtn"
+                    title="Use my current location"
+                >
+                    <i class="fa-solid fa-location-crosshairs"></i>
+
+                    <span>My Location</span>
+                </button>
+
+
+                <button
+                    class="nav-btn icon-btn"
+                    id="unitBtn"
+                    title="Change temperature unit"
+                >
+                    <span id="unitText">°C</span>
+                </button>
+
+
+                <button
+                    class="nav-btn icon-btn"
+                    id="themeBtn"
+                    title="Toggle dark mode"
+                >
+                    <i
+                        class="fa-solid fa-moon"
+                        id="themeIcon"
+                    ></i>
+                </button>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="main-container">
+
+
+        <!-- =================================================
+             WELCOME / SEARCH HERO
+        ================================================== -->
+
+        <section class="welcome-section" id="welcomeSection">
+
+            <div class="welcome-content">
+
+                <div class="welcome-icon">
+                    <i class="fa-solid fa-cloud-sun-rain"></i>
+                </div>
+
+                <span class="welcome-label">
+                    LIVE WEATHER
+                </span>
+
+                <h1>
+                    Weather made
+                    <span>simple.</span>
+                </h1>
+
+                <p>
+                    Search any city around the world and get
+                    current weather, hourly conditions and a
+                    detailed 7-day forecast.
+                </p>
+
+
+                <form
+                    class="hero-search"
+                    id="heroSearchForm"
+                >
+
+                    <div class="hero-search-box">
+
+                        <i class="fa-solid fa-magnifying-glass"></i>
+
+                        <input
+                            type="text"
+                            id="heroCityInput"
+                            placeholder="Enter a city, e.g. Bhubaneswar"
+                            autocomplete="off"
+                        >
+
+                        <button type="submit">
+                            <span>Check Weather</span>
+
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+
+                    </div>
+
+                </form>
+
+
+                <button
+                    class="use-location-hero"
+                    id="heroLocationBtn"
+                >
+                    <i class="fa-solid fa-location-crosshairs"></i>
+
+                    Use my current location
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             LOADING STATE
+        ================================================== -->
+
+        <section
+            class="loading-state hidden"
+            id="loadingState"
+        >
+
+            <div class="loader"></div>
+
+            <h3>Fetching weather...</h3>
+
+            <p>
+                Getting the latest forecast for you.
+            </p>
+
+        </section>
+
+
+        <!-- =================================================
+             ERROR STATE
+        ================================================== -->
+
+        <section
+            class="error-state hidden"
+            id="errorState"
+        >
+
+            <div class="error-icon">
+                <i class="fa-solid fa-cloud-bolt"></i>
+            </div>
+
+            <h2>Unable to find weather</h2>
+
+            <p id="errorMessage">
+                Please check the city name and try again.
+            </p>
+
+            <button
+                class="primary-button"
+                id="tryAgainBtn"
+            >
+                <i class="fa-solid fa-rotate-right"></i>
+
+                Try Again
+            </button>
+
+        </section>
+
+
+        <!-- =================================================
+             WEATHER DASHBOARD
+        ================================================== -->
+
+        <section
+            class="weather-dashboard hidden"
+            id="weatherDashboard"
+        >
+
+
+            <!-- =============================================
+                 LOCATION BAR
+            ============================================== -->
+
+            <div class="location-header">
+
+                <div>
+
+                    <span class="section-label">
+                        CURRENT WEATHER
+                    </span>
+
+                    <h1 id="locationName">
+                        Bhubaneswar
+                    </h1>
+
+                    <p id="locationDetails">
+                        Odisha, India
+                    </p>
+
+                </div>
+
+
+                <div class="location-time">
+
+                    <i class="fa-regular fa-clock"></i>
+
+                    <div>
+                        <span>Local time</span>
+
+                        <strong id="localTime">
+                            --:--
+                        </strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 CURRENT WEATHER
+            ============================================== -->
+
+            <div class="current-weather-grid">
+
+
+                <!-- Main Weather Card -->
+                <article class="current-weather-card">
+
+                    <div class="weather-card-top">
+
+                        <div>
+
+                            <span id="currentDate">
+                                Today
+                            </span>
+
+                            <p id="weatherDescription">
+                                Clear Sky
+                            </p>
+
+                        </div>
+
+                        <div
+                            class="weather-main-icon"
+                            id="currentWeatherIcon"
+                        >
+                            ☀️
+                        </div>
+
+                    </div>
+
+
+                    <div class="temperature-area">
+
+                        <h2 id="currentTemperature">
+                            28°
+                        </h2>
+
+                        <div>
+
+                            <span>Feels like</span>
+
+                            <strong id="feelsLike">
+                                30°
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="high-low">
+
+                        <span>
+                            <i class="fa-solid fa-arrow-up"></i>
+
+                            High
+
+                            <strong id="todayHigh">
+                                31°
+                            </strong>
+                        </span>
+
+                        <span>
+                            <i class="fa-solid fa-arrow-down"></i>
+
+                            Low
+
+                            <strong id="todayLow">
+                                24°
+                            </strong>
+                        </span>
+
+                    </div>
+
+                </article>
+
+
+                <!-- Weather Details -->
+                <div class="weather-details-grid">
+
+
+                    <article class="detail-card">
+
+                        <div class="detail-icon humidity">
+                            <i class="fa-solid fa-droplet"></i>
+                        </div>
+
+                        <div>
+                            <span>Humidity</span>
+
+                            <strong id="humidity">
+                                --%
+                            </strong>
+                        </div>
+
+                    </article>
+
+
+                    <article class="detail-card">
+
+                        <div class="detail-icon wind">
+                            <i class="fa-solid fa-wind"></i>
+                        </div>
+
+                        <div>
+                            <span>Wind Speed</span>
+
+                            <strong id="windSpeed">
+                                -- km/h
+                            </strong>
+                        </div>
+
+                    </article>
+
+
+                    <article class="detail-card">
+
+                        <div class="detail-icon visibility">
+                            <i class="fa-regular fa-eye"></i>
+                        </div>
+
+                        <div>
+                            <span>Visibility</span>
+
+                            <strong id="visibility">
+                                -- km
+                            </strong>
+                        </div>
+
+                    </article>
+
+
+                    <article class="detail-card">
+
+                        <div class="detail-icon pressure">
+                            <i class="fa-solid fa-gauge-high"></i>
+                        </div>
+
+                        <div>
+                            <span>Pressure</span>
+
+                            <strong id="pressure">
+                                -- hPa
+                            </strong>
+                        </div>
+
+                    </article>
+
+
+                    <article class="detail-card">
+
+                        <div class="detail-icon sunrise">
+                            <i class="fa-solid fa-sun"></i>
+                        </div>
+
+                        <div>
+                            <span>Sunrise</span>
+
+                            <strong id="sunrise">
+                                --:--
+                            </strong>
+                        </div>
+
+                    </article>
+
+
+                    <article class="detail-card">
+
+                        <div class="detail-icon sunset">
+                            <i class="fa-solid fa-cloud-sun"></i>
+                        </div>
+
+                        <div>
+                            <span>Sunset</span>
+
+                            <strong id="sunset">
+                                --:--
+                            </strong>
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 HOURLY FORECAST
+            ============================================== -->
+
+            <section class="forecast-section">
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="section-label">
+                            TODAY
+                        </span>
+
+                        <h2>Hourly Forecast</h2>
+
+                        <p>
+                            Weather conditions for the next few hours.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="hourly-container"
+                    id="hourlyForecast"
+                >
+                    <!-- Generated with JavaScript -->
+                </div>
+
+            </section>
+
+
+            <!-- =============================================
+                 7 DAY FORECAST
+            ============================================== -->
+
+            <section class="forecast-section">
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="section-label">
+                            THIS WEEK
+                        </span>
+
+                        <h2>7-Day Forecast</h2>
+
+                        <p>
+                            Plan your week with the latest forecast.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="daily-forecast-grid"
+                    id="dailyForecast"
+                >
+                    <!-- Generated with JavaScript -->
+                </div>
+
+            </section>
+
+
+            <!-- =============================================
+                 RECENT SEARCHES
+            ============================================== -->
+
+            <section
+                class="recent-section"
+                id="recentSection"
+            >
+
+                <div class="recent-heading">
+
+                    <div>
+
+                        <span class="section-label">
+                            QUICK ACCESS
+                        </span>
+
+                        <h2>Recent Searches</h2>
+
+                    </div>
+
+
+                    <button
+                        id="clearRecentBtn"
+                        class="clear-recent-btn"
+                    >
+                        <i class="fa-regular fa-trash-can"></i>
+
+                        Clear
+                    </button>
+
+                </div>
+
+
+                <div
+                    class="recent-searches"
+                    id="recentSearches"
+                >
+                    <!-- Generated with JavaScript -->
+                </div>
+
+            </section>
+
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="footer">
+
+        <div class="footer-content">
+
+            <div class="footer-brand">
+
+                <div class="footer-logo">
+
+                    <i class="fa-solid fa-cloud-sun"></i>
+
+                    <span>SkyCast</span>
+
+                </div>
+
+                <p>
+                    Simple, beautiful and reliable weather
+                    forecasts for cities around the world.
+                </p>
+
+            </div>
+
+
+            <div class="footer-info">
+
+                <span>
+                    <i class="fa-solid fa-database"></i>
+
+                    Weather data powered by Open-Meteo
+                </span>
+
+                <span>
+                    © <span id="currentYear"></span> SkyCast
+                </span>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =====================================================
+         TOAST
+    ====================================================== -->
+
+    <div
+        class="toast"
+        id="toast"
+    >
+
+        <div
+            class="toast-icon"
+            id="toastIcon"
+        >
+            <i class="fa-solid fa-check"></i>
+        </div>
+
+        <div>
+
+            <strong id="toastTitle">
+                Success
+            </strong>
+
+            <p id="toastMessage">
+                Weather updated.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+</html>
